@@ -398,3 +398,10 @@ async function update() {
         await sleep(refresh_time);
     }
 }
+
+function handleButton1Click() {
+    const data = {
+        "strength.add": 1
+    };
+    sendRequest('/button1', data);
+}

@@ -30,6 +30,10 @@
             <h3><i><b>{{ user }}'s</b></i> Status:<br><a id="status">{{ status_name }}</a></h3>
             <p id="additional-info">{{ status_desc | safe }}</p>
             <p id="device-status">[设备状态列表]</p>
+            
+            <br><div style="height: 10px;"></div>
+            <button onclick="handleButton1Click()" class="dg-btn"><img src="https://dungeon-lab.cn/img/logo-new.png"
+                alt="DG-LAB" class="text-icon">雷元素攻击！</button>
 
             {% if steam_legacy_enabled %}
             <!-- (steam-legacy) 旧版 Steam 状态模块 (文字) -->

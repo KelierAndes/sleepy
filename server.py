@@ -430,6 +430,25 @@ def events():
     response.headers["X-Accel-Buffering"] = "no"  # 禁用 Nginx 缓冲
     return response
 
+async def DgStart():
+    if d.data['DGLab']['fire']:
+        postData = {"strength": d.data['DGLab']['strength'],"time":str(1000*int(d.data['DGLab']['duration'])),"override":'true'} #override:多次一键开火时，是否重置时间，true为重置时间，false为叠加时间
+        u.info(str(postData))
+        url = d.data['DGLab']['url']+"/api/v2/game/all/action/fire"
+        response = requests.post(url,data=postData,proxies={})
+    else:
+        postData = {"strength.set": d.data['DGLab']['strength']}
+        url = d.data['DGLab']['url']+"/api/v2/game/all/strength"
+        response = requests.post(url, data=postData, proxies={})
+        await asyncio.sleep(int(d.data['DGLab']['duration']))
+        response = requests.post(url, data={"strength.set": "0"}, proxies={})
+    
+    u.info(response.text)
+    
+@app.route("/button1", methods=["POST"])
+def button1_click():
+    asyncio.run(DgStart())
+    return f"郊狼运行完成，强度{d.data['DGLab']['strength']}，持续{d.data['DGLab']['duration']}秒！"
 
 # --- Special
 

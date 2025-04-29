@@ -120,9 +120,9 @@ def reverse_app_name(name: str) -> str:
 # 导入拎出来优化性能 (?)
 if MEDIA_INFO_ENABLED:
     try:
-        import winrt.windows.media.control as media  # type: ignore
+        import winsdk.windows.media.control as media  # type: ignore
     except ImportError:
-        import winrt.windows.media.control as media  # type: ignore
+        import winsdk.windows.media.control as media  # type: ignore
     from asyncio import run  # type: ignore
 
 
