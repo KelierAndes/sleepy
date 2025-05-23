@@ -93,6 +93,12 @@ div p {
   transform: translateY(-5px);
   box-shadow: 0 12px 40px rgba(206, 140, 210, 0.2);
 }
+.text-icon {
+    width: 2em;
+    height: 2em;
+    vertical-align: middle;
+    margin-right: 0.25em;
+}
 .glass {
   height: 200px;
 }
@@ -227,7 +233,35 @@ input[type="range"]::-webkit-slider-thumb {
   font-weight: 400;
   text-align: center;
   vertical-align: middle;
-  user-select: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  padding: 0.375rem 0.75rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  cursor: pointer;
+  background-color: #171717;
+}
+
+.taptap {
+  box-sizing: border-box;
+  margin: 0;
+  overflow: visible;
+  text-transform: none;
+  font-family: Arialbd;
+  border: #ffe99d 1px solid !important;
+  color: #ffe99d !important;
+  font-size: 19px !important;
+  width: 20em;
+  height: 56px;
+  margin-bottom: 28px;
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  -webkit-appearance: none;
+  appearance: none;
   background-color: transparent;
   padding: 0.375rem 0.75rem;
   line-height: 1.5;

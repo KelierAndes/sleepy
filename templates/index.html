@@ -32,8 +32,11 @@
             <p id="device-status">[设备状态列表]</p>
             
             <br><div style="height: 10px;"></div>
-            <button onclick="handleButton1Click()" class="dg-btn"><img src="https://dungeon-lab.cn/img/logo-new.png"
+            <button onclick="DGButtonClick()" class="dg-btn"><img src="https://dungeon-lab.cn/img/logo-new.png"
                 alt="DG-LAB" class="text-icon">雷元素攻击！</button>
+            
+            <br><div style="height: 10px;"></div>
+            <button onclick="TapButtonClick()" class="taptap">戳一下</button>
 
             {% if steam_legacy_enabled %}
             <!-- (steam-legacy) 旧版 Steam 状态模块 (文字) -->
@@ -92,6 +95,16 @@
 
     <script>
         document.getElementById('status').classList.add('{{ status_color }}');
+        function DGButtonClick() {
+                const data = {
+                "strength.add": 1
+            };
+            sendRequest('/button1', data);
+        }
+        function TapButtonClick() {
+            const data = {};
+            sendRequest('/button2', data, 'POST');
+        }
     </script>
     <script src="{{ url_for('static', filename='get.js') }}" defer></script>
 
