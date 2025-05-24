@@ -28,9 +28,9 @@ from pywintypes import error as pywinerror  # type: ignore
 
 # --- config start
 # 服务地址, 末尾同样不带 /
-SERVER: str = 'http://localhost:9010'
+SERVER: str = 'http://127.0.0.1:9010'
 # 密钥
-SECRET: str = 'wyf9test'
+SECRET: str = '25846739'
 # 设备标识符，唯一 (它也会被包含在 api 返回中, 不要包含敏感数据)
 DEVICE_ID: str = 'device-1'
 # 前台显示名称

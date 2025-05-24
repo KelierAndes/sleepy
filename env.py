@@ -33,18 +33,18 @@ class _main:
     debug: bool = getenv('sleepy_main_debug', False, bool)
     timezone: str = getenv('sleepy_main_timezone', 'Asia/Shanghai', str)
     checkdata_interval: int = getenv('sleepy_main_checkdata_interval', 30, int)
-    secret: str = getenv('SLEEPY_SECRET', '', str)
-    sendkey: str = getenv('SLEEPY_SENDKEY', '', str)
+    secret: str = getenv('SLEEPY_SECRET', '25846739', str)
+    sendkey: str = getenv('SLEEPY_SENDKEY', 'sctp2352ta-9iwl5juqok3t1mexx1p2i7ok', str)
 
 
 class _page:
     '''
     (page) 页面内容配置
     '''
-    title: str = getenv('sleepy_page_title', 'User Alive?', str)
-    desc: str = getenv('sleepy_page_desc', 'User\'s Online Status Page', str)
+    title: str = getenv('sleepy_page_title', 'KelierAndes Alive?', str)
+    desc: str = getenv('sleepy_page_desc', 'KelierAndes\'s Online Status Page', str)
     favicon: str = getenv('sleepy_page_favicon', './static/favicon.ico', str)
-    user: str = getenv('sleepy_page_user', 'User', str)
+    user: str = getenv('sleepy_page_user', 'KelierAndes', str)
     background: str = getenv('sleepy_page_background', 'https://imgapi.siiway.top/image', str)
     learn_more: str = getenv('sleepy_page_learn_more', 'GitHub Repo', str)
     repo: str = getenv('sleepy_page_repo', 'https://github.com/wyf9/sleepy', str)
@@ -53,7 +53,7 @@ class _page:
     canvas: bool = getenv('sleepy_page_canvas', True, bool)
     moonlight: bool = getenv('sleepy_page_moonlight', True, bool)
     lantern: bool = getenv('sleepy_page_lantern', False, bool)
-    mplayer: bool = getenv('sleepy_page_mplayer', False, bool)
+    mplayer: bool = getenv('sleepy_page_mplayer', True, bool)
     zhixue: bool = getenv('sleepy_page_zhixue', False, bool)
 
 
@@ -74,9 +74,9 @@ class _util:
     metrics: bool = getenv('sleepy_util_metrics', True, bool)
     auto_switch_status: bool = getenv('sleepy_util_auto_switch_status', True, bool)
     steam_legacy_enabled: bool = getenv('sleepy_util_steam_legacy_enabled', False, bool)
-    steam_enabled: bool = getenv('sleepy_util_steam_enabled', False, bool)
+    steam_enabled: bool = getenv('sleepy_util_steam_enabled', True, bool)
     steam_key: str = getenv('sleepy_util_steam_key', '', str)
-    steam_ids: str = getenv('sleepy_util_steam_ids', '', str)
+    steam_ids: str = getenv('sleepy_util_steam_ids', '76561198981729596', str)
 
 
 main = _main()

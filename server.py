@@ -8,6 +8,7 @@ import json5
 # import importlib  # for plugin
 import pytz
 import flask
+import asyncio
 from datetime import datetime
 from markupsafe import escape
 from serverchan_sdk import sc_send
@@ -433,35 +434,68 @@ def events():
     response.headers["X-Accel-Buffering"] = "no"  # 禁用 Nginx 缓冲
     return response
 
-def massage_send(sendkey, title, desp, options=None):
-    sendkey=env.main.sendkey
-    response = sc_send(sendkey, title, desp, options)
-    result = response.json()
-    return result
-
-@app.route("/button2", methods=["POST"])
-def button2_click():
-    run(massage_send("","Sleepy","点击了按钮"))
+def massage_send(sendkey, title, desp='', options=None):
+    if sendkey == '':
+        sendkey = env.main.sendkey
+    if options is None:
+        options = {
+            "tags": "网页推送"
+        }
+    # 判断 sendkey 是否以 'sctp' 开头，并提取数字构造 URL
+    if sendkey.startswith('sctp'):
+        match = re.match(r'sctp(\d+)t', sendkey)
+        if match:
+            num = match.group(1)
+            url = f'https://{num}.push.ft07.com/send/{sendkey}.send'
+        else:
+            raise ValueError('Invalid sendkey format for sctp')
+    else:
+        url = f'https://sctapi.ftqq.com/{sendkey}.send'
+    params = {
+        'title': title,
+        'desp': desp,
+        **options
+    }
+    headers = {
+        'Content-Type': 'application/json;charset=utf-8'
+    }
+    response = requests.post(url, json=params, headers=headers)
+    u.info(response.text)
 
 async def DgStart():
-    if d.data['DGLab']['fire']:
-        postData = {"strength": d.data['DGLab']['strength'],"time":str(1000*int(d.data['DGLab']['duration'])),"override":'true'} #override:多次一键开火时，是否重置时间，true为重置时间，false为叠加时间
-        u.info(str(postData))
-        url = d.data['DGLab']['url']+"/api/v2/game/all/action/fire"
-        response = requests.post(url,data=postData,proxies={})
-    else:
-        postData = {"strength.set": d.data['DGLab']['strength']}
-        url = d.data['DGLab']['url']+"/api/v2/game/all/strength"
-        response = requests.post(url, data=postData, proxies={})
-        await asyncio.sleep(int(d.data['DGLab']['duration']))
-        response = requests.post(url, data={"strength.set": "0"}, proxies={})
-    
-    u.info(response.text)
-    
+    try:
+        if d.data['DGLab']['fire']:
+            postData = {"strength": d.data['DGLab']['strength'],"time":str(1000*int(d.data['DGLab']['duration'])),"override":'true'}
+            u.info(str(postData))
+            url = d.data['DGLab']['url']+"/api/v2/game/all/action/fire"
+            response = requests.post(url, data=postData, proxies={})
+        else:
+            postData = {"strength.set": d.data['DGLab']['strength']}
+            url = d.data['DGLab']['url']+"/api/v2/game/all/strength"
+            response = requests.post(url, data=postData, proxies={})
+            await asyncio.sleep(int(d.data['DGLab']['duration']))
+            response = requests.post(url, data={"strength.set": "0"}, proxies={})
+        
+        u.info(response.text)
+        return "操作成功"  # 成功时返回成功信息
+    except Exception as e:
+        u.error(f"发生错误: {e}")
+        return f"发生错误: {e}"  # 捕获异常并返回错误信息
+
 @app.route("/button1", methods=["POST"])
-def button1_click():
-    asyncio.run(DgStart())
-    return f"郊狼运行完成，强度{d.data['DGLab']['strength']}，持续{d.data['DGLab']['duration']}秒！"
+async def button1_click():
+    result = await DgStart() # 调用 DgStart 并捕获返回值
+    massage = f"有人戳了你一下\n郊狼运行状态: {result}"
+    massage_send('', '网页状态推送', massage) 
+    result1 = "信息发送完成"
+    if result == "操作成功":
+        result2 = f"郊狼运行完成，强度{d.data['DGLab']['strength']}，持续{d.data['DGLab']['duration']}秒！"
+        result3 = result2
+    else:
+        result2 = f"郊狼运行失败, 错误信息: {result}"
+        result3 = ''
+    u.info(f"{result1}\n{result2}")
+    return f"{result1}\n{result3}"  # 将 DgStart 的返回值加入响应
 
 # --- Special
 
