@@ -11,7 +11,6 @@ import flask
 import asyncio
 from datetime import datetime
 from markupsafe import escape
-from serverchan_sdk import sc_send
 from functools import wraps  # 用于修饰器
 
 import utils as u
