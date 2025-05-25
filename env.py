@@ -73,9 +73,9 @@ class _util:
     '''
     metrics: bool = getenv('sleepy_util_metrics', True, bool)
     auto_switch_status: bool = getenv('sleepy_util_auto_switch_status', True, bool)
-    steam_legacy_enabled: bool = getenv('sleepy_util_steam_legacy_enabled', False, bool)
+    steam_legacy_enabled: bool = getenv('sleepy_util_steam_legacy_enabled',  False, bool)
     steam_enabled: bool = getenv('sleepy_util_steam_enabled', True, bool)
-    steam_key: str = getenv('sleepy_util_steam_key', '', str)
+    steam_key: str = getenv('sleepy_util_steam_key', '89CAE7D553CC5AA5779997B86CDEB1D2', str)
     steam_ids: str = getenv('sleepy_util_steam_ids', '76561198981729596', str)
 
 

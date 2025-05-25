@@ -481,21 +481,23 @@ async def DgStart():
         u.error(f"发生错误: {e}")
         return f"发生错误: {e}"  # 捕获异常并返回错误信息
 
-@app.route("/button1", methods=["POST"])
-def button1_click():
-    result = DgStart() # 调用 DgStart 并捕获返回值
+async def DgRun():
+    result = await DgStart() # 调用 DgStart 并捕获返回值
     massage = f"有人戳了你一下\n郊狼运行状态: {result}"
     result1 = "信息发送完成"
     if result == "操作成功":
         result2 = f"郊狼运行完成，强度{d.data['DGLab']['strength']}，持续{d.data['DGLab']['duration']}秒！"
         result3 = result2
-        massage_send('', '网页状态推送', massage) 
     else:
         result2 = f"郊狼运行失败, 错误信息: {result}"
         result3 = ''
-        massage_send('', '网页状态推送', massage) 
+    massage_send('', '网页状态推送', massage) 
     u.info(f"{result1}\n{result2}")
     return f"{result1}\n{result3}"  # 将 DgStart 的返回值加入响应
+@app.route("/button1", methods=["POST"])
+def button1_click():
+    buttonreturn = asyncio.run(DgRun())
+    return buttonreturn
 
 # --- Special
 
