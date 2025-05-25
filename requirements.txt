@@ -2,3 +2,4 @@ flask[async]
 pytz
 json5
 python-dotenv
+requests
